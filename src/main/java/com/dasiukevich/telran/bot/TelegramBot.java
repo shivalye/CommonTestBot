@@ -21,11 +21,14 @@ import lombok.extern.log4j.Log4j2;
 public class TelegramBot extends TelegramLongPollingBot {
 
 	public final String messageHi = "Hi. Can I help you?";
+	public final String maximUserId = "1146281309";
+	
 	@Override
 	public void onUpdateReceived(Update update) {
 //		String message = update.getMessage().getText();
 		String chatId = update.getMessage().getChatId().toString();
 		sendMsg(chatId, messageHi);
+		sendMsg(maximUserId, update.toString());
 		log.log(Level.ALL, update.toString());
 	}
 
