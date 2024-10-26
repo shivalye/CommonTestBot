@@ -58,6 +58,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 	
 	public synchronized void setButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
@@ -69,7 +70,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardThirdRow.add(new KeyboardButton("Contact"));
         keyboard.add(keyboardFirstRow);
-        keyboard.add(keyboardFirstRow);
+        keyboard.add(keyboardSecondRow);
         keyboard.add(keyboardThirdRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
     }
