@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -28,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 //		String message = update.getMessage().getText();
 		String chatId = update.getMessage().getChatId().toString();
 		sendMsg(chatId, messageHi);
-		sendMsg(maximUserId, update.toString());
+//		sendMsg(maximUserId, update.toString());
 		log.log(Level.ALL, update.toString());
 	}
 
@@ -49,6 +51,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 		sendMessage.setChatId(chatId);
 		sendMessage.setText(message);
 		setButtons(sendMessage);
+		setInline(sendMessage);
 		try {
 			execute(sendMessage);
 		} catch (TelegramApiException e) {
@@ -74,4 +77,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         keyboard.add(keyboardThirdRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
     }
+	
+	private void setInline(SendMessage sendMessage) {
+		List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+		List<InlineKeyboardButton> buttons1 = new ArrayList<>();
+		InlineKeyboardButton button_1 = new InlineKeyboardButton();
+		button_1.setText("Press me");
+		button_1.setCallbackData("17");
+		buttons1.add(button_1);
+		buttons.add(buttons1);
+		
+		InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
+		markupKeyboard.setKeyboard(buttons);
+		sendMessage.setReplyMarkup(markupKeyboard);
+	}
 }
